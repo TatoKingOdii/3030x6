@@ -1,0 +1,43 @@
+<div>
+  <mat-card>
+    <mat-card-header>
+      <span *ngIf="localContent.id !== -1; else prompt">
+        <mat-card-title>
+          Currently Editing: {{localContent.title}}
+        </mat-card-title>
+      </span>
+      <ng-template #prompt>
+        <mat-card-title>
+          {{title}}
+        </mat-card-title>
+      </ng-template>
+    </mat-card-header>
+    <form #form="ngForm" (ngSubmit)="onContentSave.emit(localContent)">
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput name="title" required minlength="1" type="text"
+                 [(ngModel)]="localContent.title" placeholder="Title"/>
+          <span class="spacer"></span>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput name="esrbRating" required minlength="1" type="text"
+                 [(ngModel)]="localContent.esrbRating" placeholder="ESRB Rating"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput name="genre" required minlength="1" type="text"
+                 [(ngModel)]="localContent.genre" placeholder="Genre"/>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput name="releaseDate" required type="date"
+                 [(ngModel)]="localContent.releaseDate" placeholder="Release Date"/>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button type="submit" [disabled]="form.invalid" mat-button color="accent">
+          {{ localContent.id == -1 ? 'Create' : 'Save' }}
+        </button>
+        <button type="button" mat-button (click)="onCancel.emit()">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
